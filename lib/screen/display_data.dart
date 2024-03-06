@@ -38,7 +38,7 @@ class _DisplayDataState extends State<DisplayData> {
             ):ListView(
               children: [
                 for(int i=0;i<model.userDataList.length;i++)...[
-                  getListTile(model.userDataList[i])
+                  getListTile(model.userDataList[i],i)
                 ]
               ],
             ),
@@ -54,19 +54,25 @@ class _DisplayDataState extends State<DisplayData> {
     appConfig<DbProvider>().getUserData();
   }
 }
-Widget getListTile(UserData userData) {
+Widget getListTile(UserData userData,int index) {
   return ListTile(
     contentPadding: const EdgeInsets.all(10),
-    leading: const Icon(
-      Icons.edit,
-      size: 35,
+    leading: InkWell(
+      onTap: () {
+        UserData userData1=UserData(name: "Demo1", surname: "Demo2");
+        appConfig<DbProvider>().updateUserData(userData1,index);
+      },
+      child: const Icon(
+        Icons.edit,
+        size: 35,
+      ),
     ),
     title: Text(
       userData.name,
       style: const TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
     ),
     subtitle: Text(
-      userData.name,
+      userData.surname,
       style: const TextStyle(fontSize: 17, color: Colors.black, fontWeight: FontWeight.w600),
     ),
     trailing: InkWell(

@@ -63,4 +63,14 @@ class DbProvider extends ChangeNotifier{
     }
     notifyListeners();
   }
+
+  Future<void> updateUserData(UserData userData,int index) async {
+    Box<UserData> box = await Hive.openBox<UserData>(userDataHiveBox);
+    await box.put(index,userData);
+    _list = box.values.toList();
+    if (kDebugMode) {
+      print("User data deleted");
+    }
+    notifyListeners();
+  }
 }
